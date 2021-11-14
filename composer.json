@@ -1,0 +1,26 @@
+{
+    "name": "vendor_name/pagekage_name",
+    "description": "decription_text",
+    "minimiun-stability":"stable",
+    "license": "proprietary",
+    "authors": [
+        
+        {
+            "name": "tho",
+            "email": "tho@gmail.com"
+        }
+    ],
+   
+    "require": {
+        "php": ">=5.2"
+    },
+    "autoload": {
+        "psr-4":{
+            "App\\":"app/",
+            "App\\Classes\\":"app/classes/"
+        }
+       
+    }
+   
+
+}
