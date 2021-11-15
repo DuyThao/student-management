@@ -27,7 +27,6 @@ define('PATH_ROOT', __DIR__);
 spl_autoload_register(function (string $class_name) {
     include_once PATH_ROOT . '/' . $class_name . '.php';
 });
-
 require 'core/http/Route.php';
 use Core\Http\Route;
 

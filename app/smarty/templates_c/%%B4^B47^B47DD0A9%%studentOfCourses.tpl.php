@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.32, created on 2021-11-14 10:15:17
+<?php /* Smarty version 2.6.32, created on 2021-11-15 09:53:02
          compiled from courses/studentOfCourses.tpl */ ?>
 <?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => "share/header.tpl", 'smarty_include_vars' => array()));
@@ -9,16 +9,14 @@ unset($_smarty_tpl_vars);
 <div id="layoutSidenav_content">
     <main>
         <div class="container-fluid">
-            <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item active"><a href="courses-list"> Courses</a></li>
-                <li class="breadcrumb-item active"><a href="student-of-courses"> Student</a></li>
-            </ol>
+           
             <div class="row">
             </div>
+            <br>
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="fas fa-table mr-1"></i>
-                    Table Courses
+                    Table Student Of Courses
                     <button type="button" class="btn btn-primary float-right" data-toggle="modal"
                         data-target="#add_modal" data-whatever="@getbootstrap" id="btn_add_popup"><i class="fa fa-plus"
                             aria-hidden="true"></i>Add Courses </button>
@@ -33,12 +31,12 @@ unset($_smarty_tpl_vars);
                                     <th>Name</th>
                                     <th>Courses</th>
                                     <th>Score</th>
-                                    <th>Time</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                                            </tbody>
+                               
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -50,6 +48,11 @@ unset($_smarty_tpl_vars);
 
 <?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => "courses/updateStudent.tpl", 'smarty_include_vars' => array()));
+$this->_tpl_vars = $_smarty_tpl_vars;
+unset($_smarty_tpl_vars);
+ ?>
+<?php $_smarty_tpl_vars = $this->_tpl_vars;
+$this->_smarty_include(array('smarty_include_tpl_file' => "courses/addStudent.tpl", 'smarty_include_vars' => array()));
 $this->_tpl_vars = $_smarty_tpl_vars;
 unset($_smarty_tpl_vars);
  ?>

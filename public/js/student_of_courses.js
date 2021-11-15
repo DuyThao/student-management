@@ -10,49 +10,113 @@ let top_student = false;
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        $(document).ready(function() {
-             
+        
+        var url = window.location.href
+        var id = url.substring(url.lastIndexOf('?') + 1);
+       
+        $(document).ready(function () {
+
             table = $('#datatable_student_of_courses').dataTable({
                 'scrollX': true,
                 'pagingType': 'numbers',
                 'processing': true,
                 'serverSide': true,
+                "searching": false,
                 "ajax": {
                     "url": "get-data-table-student-of-courses",
                     "type": "POST",
+                    "data":{id:id}
                 },
-                "columns": [ 
+                "columns": [
                     { "data": "0" },
                     { "data": "1" },
                     { "data": "2" },
                     { "data": "3" },
-                    { "data": "4" },
                     { "data": null }
                 ],
                 columnDefs: [
                     {
-                        targets: 5,
+                        targets: 4,
                         orderable: false,
                         render: function (data) {
                             return `
                             <div id="update_${data[0]}" class="btn btn-primary" data-toggle="modal" data-target="#edit_modal" 
-                            data-whatever="@getbootstrap" onclick="getItem( '${data[0]}', '${data[1]}', '${data[2]}', '${data[3]}','${data[4]}')" ><i class="far fa-edit" aria-hidden="true"></i></div> `;
+                            data-whatever="@getbootstrap" onclick="getItem( '${data[0]}', '${data[1]}', '${data[2]}', '${data[3]}')" ><i class="far fa-edit" aria-hidden="true"></i></div> 
+                            <button id="delete_${data[0]}" type="button" class="btn btn-danger" onclick="deleteStudent('${data[0]}')" ><i class="fa fa-trash"></i></button> `;
                         }
                     }],
-                // "columnDefs": [
-                //     {"render": createManageBtn, "data": null, "targets": 5}
-                // ],
             });
+        });
+        $('#add_form').on('submit', function (e) {
+            e.preventDefault();
+            var data = {
+                'student_id': $('#name').val(),
+                'score': $('#score').val(),
+            }
+            token = $('#csrf_token').val()
+            if ($('#name').val() != "" && $('#score').val() != "" ) {
+                $.post("student-of-courses-add", { data: data, token: token }, function (result) {
+                    swal({
+                        title: 'Create Success',
+                        type: 'success',
+                        timer: 1000,
+                        buttons: true,
+                    })
+                    $('#datatable_student_of_courses').DataTable().ajax.reload();
+                    $("#add_modal").modal('hide');
 
-            console.log("@@@@@",table);
+                }).catch(function (error) {
+                    console.log(error);
+                    Swal('Create fail', '', 'error');
+                })
+            }
+            else {
+                return;
+            }
+
         });
 
-        $("#datatable_student_of_courses").on("click", "button.edit", function() {
-            var data = table.row($(this).parents("tr")).data();
-            alert(data[0] + " I'm editing");
-          });
+        $('#update_form').on('submit', function (e) {
+            e.preventDefault();
+
+            var data = {
+                'score': $('#update_score').val(),
+                'id': $('#update_form').attr('data-id'),
+            }
+            token = $('#csrf_token').val()
+
+            if ($('#update_score').val() != "" ) {
+                $.post("student-update-score", { data: data, token: token }, function (result) {
+                    console.log(result);
+                    swal({
+                        title: 'Update Success',
+                        type: 'success',
+                        timer: 1000,
+                        buttons: true,
+                    })
+                    $('#datatable_student_of_courses').DataTable().ajax.reload();
+
+                    $("#edit_modal").modal('hide');
+
+
+                }).catch(function (error) {
+                    console.log(error);
+                    Swal('Update fail', '', 'error');
+                })
+            }
+            else {
+                return;
+            }
+
+        });
+        $('#add_modal').on('hidden.bs.modal', function (e) {
+            $('#name').val('')
+            $('#score').val('')
+            $('#add_form').attr('class', 'needs-validation');
+        })
+
     };
-   
+
     new student_of_courses();
 })($);
 
@@ -60,68 +124,18 @@ function createManageBtn() {
     return '<button id="manageBtn" type="button" class="btn btn-success btn-xs edit">Manage</button>';
 }
 
-// function myFunc() {
-//     console.log("Button was clicked!!!");
-// }
 
-function getItem(id, name, courses, score, time) {
+function getItem(id, name, courses, score) {
 
-        $('#update_form').attr('data-id', id);
-        $('#update_name').val(name)
-        $('#update_courses').val(courses)
-        $('#update_score').val(score)
-        time = time.replace(" ", "T");
-        $('#update_time').val(time)
-
-}
-function searchXSS() {
-    text = $("#search_test").val();
-    $.get("search-item/" + text, function (result) {
-        $("#search_result").html("Search for: " + text)
-
-    });
+    $('#update_form').attr('data-id', id);
+    $('#update_name').val(name)
+    $('#update_score').val(score)
 
 }
 
-function topStudent() {
-    top_student = true
-    searchStudent();
-}
 
-function searchStudent() {
-    search = $("#search").val();
-    column = $("#sort").val();
-    type = $("#sort_type").val();
-
-
-    var table = $('#datatable_student').DataTable();
-    table.clear();
-    table.destroy();
-    $('#datatable_student').dataTable({
-        "ordering": false,
-        "processing": true,
-        "serverSide": true,
-        "paging": true,
-        "searching": false,
-        "pageLength": 10,
-        "pagingType": "full_numbers",
-        "responsive": true,
-        "ajax": {
-            "url": "search-student",
-            "type": "POST",
-            "data": { search: search, column: column, type: type, top: top_student },
-        },
-        "fnRowCallback": function (nRow, aData) {
-            $(nRow).attr("rowid", aData[0]);
-            return nRow;
-        },
-    });
-    top_student = false
-
-}
 function deleteStudent(id) {
     token = $('#csrf_token').val()
-
     swal({
         title: 'Are you sure?',
         text: "What do you want to delete it?",
@@ -136,7 +150,7 @@ function deleteStudent(id) {
 
         if (result.value) {
 
-            axios.post('student-delete/' + id, token)
+            axios.post('student-of-courses-delete/' + id, token)
                 .then(res => {
                     swal({
                         title: 'Delete Success',
@@ -144,38 +158,14 @@ function deleteStudent(id) {
                         timer: 1000,
                         buttons: true,
                     })
-                    reload_table()
+                    $('#datatable_student_of_courses').DataTable().ajax.reload();
+
                 }).catch(function (error) {
                     console.log(error);
                     Swal('Update fail', '', 'error');
-
                 })
         }
     })
 
-}
-function reload_table() {
-    var table = $('#datatable_student').DataTable();
-    table.clear();
-    table.destroy();
-    $('#datatable_student').dataTable({
-        "ordering": false,
-        "processing": true,
-        "serverSide": true,
-        "paging": true,
-        "searching": false,
-        "pageLength": 10,
-        "pagingType": "full_numbers",
-        "responsive": true,
-        "ajax": {
-            "url": "search-student",
-            "type": "POST",
-            "data": { search: search, column: column, type: type, top: top_student },
-        },
-        "fnRowCallback": function (nRow, aData) {
-            $(nRow).attr("rowid", aData[0]);
-            return nRow;
-        },
-    });
 }
 

@@ -28,31 +28,6 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="small mb-1" for="courses"> Courses </label>
-                                <input class="form-control py-4 " id="courses" type="text" placeholder=" Enter courses " name="courses"
-                                    required />
-                                <div class="invalid-feedback">
-                                    Valid courses is required
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="form-row">
-                        
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="small mb-1" for="score"> Score </label>
-                                <input class="form-control py-4" id="score" placeholder=" Enter score "
-                                    name="score" required />
-                                <div class="invalid-feedback">
-                                    Valid score is required
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
                                 <label class="small mb-1" for="time"> Time </label>
                                 <input class="form-control py-4" id="time" placeholder=" Enter time "
                                     name="time" type="datetime-local" required />
@@ -62,8 +37,6 @@
                             </div>
                         </div>
                     </div>
-                    
-
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"> Close </button>
                         <button type="submit" class="btn btn-primary" id="create_student"> Create </button>

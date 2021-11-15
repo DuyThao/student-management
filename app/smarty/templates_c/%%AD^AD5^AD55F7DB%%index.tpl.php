@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.32, created on 2021-11-14 14:16:59
+<?php /* Smarty version 2.6.32, created on 2021-11-15 09:53:00
          compiled from courses/index.tpl */ ?>
 <?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => "share/header.tpl", 'smarty_include_vars' => array()));
@@ -9,12 +9,10 @@ unset($_smarty_tpl_vars);
 <div id="layoutSidenav_content">
     <main>
         <div class="container-fluid">
-            <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item active"><a href="courses-list"> Courses</a></li>
-                <li class="breadcrumb-item active"><a href="student-of-courses"> Student</a></li>
-            </ol>
+           
             <div class="row">
             </div>
+            <br>
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="fas fa-table mr-1"></i>

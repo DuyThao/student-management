@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.32, created on 2021-11-14 10:43:38
+<?php /* Smarty version 2.6.32, created on 2021-11-15 04:52:06
          compiled from share/header.tpl */ ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,8 +50,6 @@
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                       
-
                         <a class="nav-link" href="student-list">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Student list
@@ -60,12 +58,6 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Courses
                         </a>
-                        <a class="nav-link" href="#">
-                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Setting
-                        </a>
-
-
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">

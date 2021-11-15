@@ -25,12 +25,19 @@ $router->get('/courses-list', 'CoursesController@index');
 $router->post('/get-data-table-courses', 'CoursesController@getDatatable');
 
 $router->post('/courses-add', 'CoursesController@createCourses');
+$router->post('/courses-id', 'CoursesController@saveCourses');
 
 
-
-
-$router->get('/student-of-courses', 'StudentOfCoursesController@index');
+//student of courses
+$router->get('/student-of-courses?{id}', 'StudentOfCoursesController@index');
 
 $router->post('/get-data-table-student-of-courses', 'StudentOfCoursesController@searchStudent');
+$router->post('/student-of-courses-add', 'StudentOfCoursesController@createStudent');
+$router->post('/student-update-score', 'StudentOfCoursesController@updateStudent');
+$router->post('/student-of-courses-delete/{id}', 'StudentOfCoursesController@deleteStudent');
+
+
+
+
 
 

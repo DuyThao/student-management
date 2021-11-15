@@ -5,14 +5,10 @@ namespace App\Service;
 use PDO;
 use PDOException;
 
-$file = $_SERVER['DOCUMENT_ROOT'] . '/datatables/pdo.php';
-if (is_file($file)) {
-    include($file);
-}
 
 class sspService
 {
-   
+
     static function data_output($columns, $data)
     {
         $out = array();
@@ -57,7 +53,7 @@ class sspService
     static function limit($request, $columns)
     {
         $limit = '';
-        $a= $request['start'];
+        $a = $request['start'];
         if (isset($request['start']) && $request['length'] != -1) {
             $limit = "LIMIT " . intval($request['start']) . ", " . intval($request['length']);
         }
@@ -74,7 +70,6 @@ class sspService
             $dtColumns = self::pluck($columns, 'dt');
 
             for ($i = 0, $ien = count($request['order']); $i < $ien; $i++) {
-                // Convert the column index into the column data property
                 $columnIdx = intval($request['order'][$i]['column']);
                 $requestColumn = $request['columns'][$columnIdx];
 
@@ -206,6 +201,86 @@ class sspService
         );
     }
 
+    static function SelectGroupBy($request, $conn, $table, $primaryKey, $columns,  $joinQuery, $select, $filter, $groupBy, $top)
+    {
+        $bindings = array();
+        $db = self::db($conn);
+
+        $limit = self::limit($request, $columns);
+        $order = self::order($request, $columns);
+        // $where = self::filter($request, $columns, $bindings);
+        if ($top == 'true')
+            $query =  "SELECT $select FROM $joinQuery WHERE $filter GROUP BY $groupBy ORDER BY average_score DESC LIMIT 3";
+        else
+            $query =  "SELECT $select FROM $joinQuery WHERE $filter GROUP BY $groupBy $order $limit";
+        $data = self::sql_exec(
+            $db,
+            $bindings,
+            $query
+        );
+        $resFilterLength = self::sql_exec(
+            $db,
+            $bindings,
+            "SELECT COUNT(*) FROM $joinQuery "
+        );
+        $recordsFiltered = $resFilterLength[0][0];
+
+        $resTotalLength = self::sql_exec(
+            $db,
+            "SELECT COUNT(*) FROM $joinQuery "
+        );
+        $recordsTotal = $resTotalLength[0][0];
+
+        return array(
+            "draw"            => isset($request['draw']) ?
+                intval($request['draw']) :
+                0,
+            "recordsTotal"    => intval($recordsTotal),
+            "recordsFiltered" => intval($recordsFiltered),
+            "data"            => self::data_output($columns, $data)
+        );
+    }
+    static function SelectJoin($request, $conn, $table, $primaryKey, $columns,  $joinQuery, $select, $filter)
+    {
+        $bindings = array();
+        $db = self::db($conn);
+
+        $limit = self::limit($request, $columns);
+        $order = self::order($request, $columns);
+        $where = self::filter($request, $columns, $bindings);
+        $query =  "SELECT $select
+                    FROM $joinQuery WHERE $filter  
+                    $order
+			        $limit
+                    ";
+        $data = self::sql_exec(
+            $db,
+            $bindings,
+            $query
+        );
+        $resFilterLength = self::sql_exec(
+            $db,
+            $bindings,
+            "SELECT COUNT(*) FROM $joinQuery WHERE $filter"
+        );
+        $recordsFiltered = $resFilterLength[0][0];
+
+        $resTotalLength = self::sql_exec(
+            $db,
+            "SELECT COUNT(*) FROM $joinQuery WHERE $filter"
+        );
+        $recordsTotal = $resTotalLength[0][0];
+
+        return array(
+            "draw"            => isset($request['draw']) ?
+                intval($request['draw']) :
+                0,
+            "recordsTotal"    => intval($recordsTotal),
+            "recordsFiltered" => intval($recordsFiltered),
+            "data"            => self::data_output($columns, $data)
+        );
+    }
+
 
     static function complex($request, $conn, $table, $primaryKey, $columns, $whereResult = null, $whereAll = null)
     {
@@ -278,7 +353,7 @@ class sspService
     static function sql_connect($sql_details)
     {
         try {
-        
+
             $servername = $sql_details['host'];
             $username = $sql_details['username'];
             $password = $sql_details['password'];

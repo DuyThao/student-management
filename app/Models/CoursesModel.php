@@ -11,10 +11,10 @@ class CoursesModel extends BaseModel
 {
 
     public  int $id;
-    public  string $name;
+    public  string $courses_name;
 
 
-    function getList($offset, $limit)
+    function getList()
     {
         $dbh = $this->db->prepare("SELECT * FROM courses");
         $dbh->execute();
@@ -26,7 +26,7 @@ class CoursesModel extends BaseModel
     {
         $service = new BaseService();
 
-        $sql = "INSERT INTO courses (name)  VALUES (?)";
+        $sql = "INSERT INTO courses (courses_name)  VALUES (?)";
         try {
             $stmt = $this->db->prepare($sql);
             $stmt->execute([$data->name]);
@@ -40,8 +40,7 @@ class CoursesModel extends BaseModel
     function update($data)
     {
         $service = new BaseService();
-        $sql = "UPDATE courses SET name =? WHERE id =?";
-
+        $sql = "UPDATE courses SET courses_name =? WHERE id =?";
         try {
             $stmt = $this->db->prepare($sql);
             $stmt->execute([$data->name, $data->id]);
@@ -67,7 +66,6 @@ class CoursesModel extends BaseModel
         }
     }
 
-
     function getItem($id)
     {
         $dbh = $this->db->prepare("SELECT * FROM courses WHERE id=?");
@@ -76,28 +74,12 @@ class CoursesModel extends BaseModel
             return  $dbh->fetchAll(PDO::FETCH_NUM);
         }
     }
-    function search($offset, $limit, $text, $column, $type)
+    function validate($data)
     {
-        $dbh = $this->db->prepare("SELECT * FROM courses WHERE name  LIKE '%{$text}%' or courses  LIKE '%{$text}%' or score  LIKE '%{$text}%' ORDER BY {$column} {$type} LIMIT {$offset},{$limit}");
-        $dbh->execute();
-        if ($dbh->rowCount()) {
-            return  $dbh->fetchAll(PDO::FETCH_NUM);
+        $service = new BaseService();
+        if (!isset($data['name']) ) {
+            return  $service->header_status(400);
         }
     }
-
-    function countStudent($table, $text, $column, $type)
-    {
-        $dbh = $this->db->prepare("SELECT COUNT(*) FROM {$table} WHERE name  LIKE '%{$text}%' or courses  LIKE '%{$text}%' or score  LIKE '%{$text}%' ORDER BY {$column} {$type}");
-        $dbh->execute();
-        $count = $dbh->fetchColumn();
-        return $count;
-    }
-
-    function top3($table)
-    {
-        $dbh = $this->db->prepare("SELECT TOP 3 FROM {$table}  ORDER BY score DESC");
-        $dbh->execute();
-        $count = $dbh->fetchColumn();
-        return $count;
-    }
+   
 }

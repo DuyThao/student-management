@@ -48,8 +48,6 @@
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                       
-
                         <a class="nav-link" href="student-list">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Student list
@@ -58,12 +56,6 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Courses
                         </a>
-                        <a class="nav-link" href="#">
-                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Setting
-                        </a>
-
-
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">

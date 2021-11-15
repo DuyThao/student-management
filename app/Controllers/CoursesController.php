@@ -17,7 +17,7 @@ class CoursesController extends Route
         $token = $service->getCSRFToken();
         $_SESSION['token'] = $token;
         $this->tpl->assign('token', $token);
-        
+
         $model = new CoursesModel;
         $data = $model->getList(10, 1);
         if ($data) {
@@ -25,14 +25,14 @@ class CoursesController extends Route
         }
         $this->tpl->display('courses/index.tpl');
     }
-    
+
     function listStudent()
     {
         $service = new BaseService();
         $token = $service->getCSRFToken();
         $_SESSION['token'] = $token;
         $this->tpl->assign('token', $token);
-        
+
         $model = new CoursesModel;
         $data = $model->getList(10, 1);
         if ($data) {
@@ -45,40 +45,23 @@ class CoursesController extends Route
     {
         $columns = array(
             array("db" => "id", "dt" => 0),
-            array("db" => "name", "dt" => 1),
+            array("db" => "courses_name", "dt" => 1),
         );
-       
         $ssp = new sspService();
         echo json_encode($ssp->simple($_POST, $GLOBALS['config']['mysql'], 'courses', 'id', $columns));
     }
 
-    function renderDataTable($list_data, $count, $draw){
-        foreach ($list_data as $key => $value) {
-            array_push($list_data[$key], [
-                '<div id="update_' . $list_data[$key][0] . '" class="btn btn-primary" data-toggle="modal" data-target="#edit_modal" 
-                data-whatever="@getbootstrap" onclick="getItem(' . $list_data[$key][0] . ')" ><i class="far fa-edit" aria-hidden="true"></i></div> 
-                <button id="delete_' . $list_data[$key][0]  . '" type="button" class="btn btn-danger" onclick="deleteCourses(' . $list_data[$key][0] . ')" ><i class="fa fa-trash"></i></button>  '
-            ]);
-        }
-       
-        $results = array(
-            "draw" => intval($draw),
-            "recordsTotal" => $count,
-            "recordsFiltered" => $count,
-            "aaData" => $list_data
-        );
-        return $results;
-
-    }
 
     function createCourses()
     {
+        $service = new BaseService();
         $token = $_POST['token'];
         $ss_token = $_SESSION['token'];
         if ($token != $ss_token) {
-            echo json_encode(['code' => 500]);
+            $service->header_status(401);
         } else {
             $model = new CoursesModel;
+            $model->validate($_POST['data']);
 
             $data = $this->xssafe($_POST['data']);
             $result =  $model->create($data);
@@ -87,16 +70,17 @@ class CoursesController extends Route
     }
     function deleteCourses()
     {
+        $service = new BaseService();
+
         $model = new CoursesModel;
         $url = $_GET['url'];
         $id = addslashes(explode("/", $url)[1]);
-
         $data = $_POST;
         $token = array_shift(array_keys($data));
         $ss_token = $_SESSION['token'];
 
         if ($token != $ss_token) {
-            echo json_encode(['code' => 500]);
+            $service->header_status(401);
         } else {
             echo $model->delete($id);
         }
@@ -113,15 +97,20 @@ class CoursesController extends Route
 
     function updateCourses()
     {
+        $service = new BaseService();
         $token = $_POST['token'];
         $ss_token = $_SESSION['token'];
         if ($token != $ss_token) {
-            echo json_encode(['code' => 500]);
+            $service->header_status(401);
         } else {
             $model = new CoursesModel;
             $courses = $this->xssafe($_POST['data']);
             echo $model->update($courses);
         }
+    }
+    public function saveCourses()
+    {
+        $_SESSION['courses_id'] = $_POST['courses_id'];
     }
     public function xssafe($data, $encoding = 'UTF-8')
     {
@@ -131,5 +120,4 @@ class CoursesController extends Route
         }
         return $courses;
     }
-   
 }
