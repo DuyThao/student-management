@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.32, created on 2021-11-15 05:50:40
+<?php /* Smarty version 2.6.32, created on 2021-11-15 11:52:00
          compiled from courses/addStudent.tpl */ ?>
 <!--begin add Modal -->
 <div class="modal fade" id="add_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -6,7 +6,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"> Create Student</h5>
+                <h5 class="modal-title" id="exampleModalLabel"> Assign Student</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

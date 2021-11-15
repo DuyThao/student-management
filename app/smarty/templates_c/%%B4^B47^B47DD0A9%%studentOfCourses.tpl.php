@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.32, created on 2021-11-15 09:53:02
+<?php /* Smarty version 2.6.32, created on 2021-11-15 11:52:00
          compiled from courses/studentOfCourses.tpl */ ?>
 <?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => "share/header.tpl", 'smarty_include_vars' => array()));
@@ -19,7 +19,7 @@ unset($_smarty_tpl_vars);
                     Table Student Of Courses
                     <button type="button" class="btn btn-primary float-right" data-toggle="modal"
                         data-target="#add_modal" data-whatever="@getbootstrap" id="btn_add_popup"><i class="fa fa-plus"
-                            aria-hidden="true"></i>Add Courses </button>
+                            aria-hidden="true"></i>Assign Student </button>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive ">

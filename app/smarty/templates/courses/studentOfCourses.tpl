@@ -3,7 +3,6 @@
 <div id="layoutSidenav_content">
     <main>
         <div class="container-fluid">
-           
             <div class="row">
             </div>
             <br>
@@ -13,7 +12,7 @@
                     Table Student Of Courses
                     <button type="button" class="btn btn-primary float-right" data-toggle="modal"
                         data-target="#add_modal" data-whatever="@getbootstrap" id="btn_add_popup"><i class="fa fa-plus"
-                            aria-hidden="true"></i>Add Courses </button>
+                            aria-hidden="true"></i>Assign Student </button>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive ">
