@@ -38,7 +38,5 @@
 </div>
 
 {include file="users/addUsers.tpl" }
-{*{include file="student/updateUsers.tpl" }*}
-
 {include file="share/footer.tpl"}
 <script src="public/js/users.js"></script>

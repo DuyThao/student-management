@@ -75,12 +75,8 @@ function reload_table() {
 }
 
 function clicka(courses_id) {
-
     $.post("courses-id", { courses_id: courses_id }, function (result) {
-
     });
-
-
 }
 function createManageBtn() {
     return '<button id="manageBtn" type="button" class="btn btn-success btn-xs edit">Manage</button>';

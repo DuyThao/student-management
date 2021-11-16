@@ -1,7 +1,6 @@
 <link href="public/css/login.css" rel="stylesheet" crossorigin="anonymous" />
 <div class="wrapper fadeInDown">
     <div id="formContent">
-        <!-- Tabs Titles -->
         <div class="fadeIn first">
         <br>
         {if isset($status) && $status == false}

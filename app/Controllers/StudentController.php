@@ -16,21 +16,15 @@ class StudentController extends Route
 
     function index()
     {
-        // if (isset($_SESSION['loggedin'])) {
-        //     if ($_SESSION['loggedin'] == true) {
-                $service = new BaseService();
-                $token = $service->getCSRFToken();
-                $_SESSION['token'] = $token;
-                $this->tpl->assign('token', $token);
-                $model = new CoursesModel;
-                $courses = $model->getList();
+        $service = new BaseService();
+        $token = $service->getCSRFToken();
+        $_SESSION['token'] = $token;
+        $this->tpl->assign('token', $token);
+        $model = new CoursesModel;
+        $courses = $model->getList();
 
-                $this->tpl->assign('courses', $courses);
-                $this->tpl->display('student/index.tpl');
-            // }
-        // } else {
-        //     header('Location: ' . 'login');
-        // }
+        $this->tpl->assign('courses', $courses);
+        $this->tpl->display('student/index.tpl');
     }
 
     function getDataTable()
