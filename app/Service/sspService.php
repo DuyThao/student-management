@@ -248,28 +248,53 @@ class sspService
         $limit = self::limit($request, $columns);
         $order = self::order($request, $columns);
         $where = self::filter($request, $columns, $bindings);
-        $query =  "SELECT $select
-                    FROM $joinQuery WHERE $filter  
-                    $order
-			        $limit
-                    ";
+        if ($filter == null) {
+            $query =  "SELECT $select
+            FROM $joinQuery 
+            $order
+            $limit
+            ";
+        } else {
+            $query =  "SELECT $select
+            FROM $joinQuery WHERE $filter  
+            $order
+            $limit
+            ";
+        }
+
         $data = self::sql_exec(
             $db,
             $bindings,
             $query
         );
-        $resFilterLength = self::sql_exec(
-            $db,
-            $bindings,
-            "SELECT COUNT(*) FROM $joinQuery WHERE $filter"
-        );
-        $recordsFiltered = $resFilterLength[0][0];
+        if ($filter == null) {
+            $resFilterLength = self::sql_exec(
+                $db,
+                $bindings,
+                "SELECT COUNT(*) FROM $joinQuery "
+            );
+            $recordsFiltered = $resFilterLength[0][0];
 
-        $resTotalLength = self::sql_exec(
-            $db,
-            "SELECT COUNT(*) FROM $joinQuery WHERE $filter"
-        );
-        $recordsTotal = $resTotalLength[0][0];
+            $resTotalLength = self::sql_exec(
+                $db,
+                "SELECT COUNT(*) FROM $joinQuery "
+            );
+            $recordsTotal = $resTotalLength[0][0];
+        } else {
+            $resFilterLength = self::sql_exec(
+                $db,
+                $bindings,
+                "SELECT COUNT(*) FROM $joinQuery WHERE $filter"
+            );
+            $recordsFiltered = $resFilterLength[0][0];
+
+            $resTotalLength = self::sql_exec(
+                $db,
+                "SELECT COUNT(*) FROM $joinQuery WHERE $filter"
+            );
+            $recordsTotal = $resTotalLength[0][0];
+        }
+
 
         return array(
             "draw"            => isset($request['draw']) ?

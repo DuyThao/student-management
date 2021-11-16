@@ -1,9 +1,6 @@
-<?php /* Smarty version 2.6.32, created on 2021-11-13 14:54:26
+<?php /* Smarty version 2.6.32, created on 2021-11-16 10:05:17
          compiled from share/footer.tpl */ ?>
  </div>
-
-
-
  <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" crossorigin="anonymous">
  </script>

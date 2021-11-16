@@ -27,7 +27,7 @@ class UsersModel extends BaseModel
             $stmt->execute([$data->username, $password, $data->username, $data->username, '2021/11/11']);
             return $service->header_status(200);
         } catch (PDOException $e) {
-            return $service->header_status(500);
+            return $service->header_status_code(500, $e->getMessage());
         }
     }
     function login($data)
@@ -64,6 +64,19 @@ class UsersModel extends BaseModel
         $service = new BaseService();
         if (!isset($data['username']) || !isset($data['password'])) {
             return  $service->header_status(400);
+        }
+    }
+    public function xssafe($data, $encoding = 'UTF-8')
+    {
+        $service = new BaseService();
+        try {
+            $user = new UsersModel;
+            foreach ($data as $key => $value) {
+                $user->$key = htmlspecialchars($value, ENT_QUOTES | ENT_HTML401, $encoding);
+            }
+            return $user;
+        } catch (\ErrorException $ex) {
+            return $service->header_status(500);
         }
     }
 }

@@ -60,18 +60,8 @@ function reload_table() {
         "columns": [
             { "data": "0" },
             { "data": "1" },
-            { "data": null }
         ],
-        columnDefs: [
-            {
-                targets: 2,
-                orderable: false,
-                render: function (data) {
-                    return `
-                    <a href="student-of-courses?${data[0]}" onClick="clicka( '${data[0]}')" class="btn btn-primary"><i class="fas fa-list"></i></a>`;
-                }
-            }
-        ],
+        
     });
 }
 

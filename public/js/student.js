@@ -198,6 +198,8 @@ function reload_table() {
                     return `<div id="update_${data[0]}" class="btn btn-primary" data-toggle="modal" data-target="#edit_modal" 
                     data-whatever="@getbootstrap" onclick="getItem( '${data[0]}', '${data[1]}', '${data[2]}')" ><i class="far fa-edit" aria-hidden="true"></i></div> 
                     <button id="delete_${data[0]}" type="button" class="btn btn-danger" onclick="deleteStudent(${data[0]})" ><i class="fa fa-trash"></i></button>
+                    <button id="courses_${data[0]}" type="button" class="btn btn-info" onclick="StudentOfCourses(${data[0]})" data-toggle="modal" data-target="#courses_modal" 
+                    data-whatever="@getbootstrap"><i class="fa fa-list"></i></button>
                     `;
                 }
             }
@@ -205,3 +207,23 @@ function reload_table() {
     });
 }
 
+function StudentOfCourses(student_id){
+    var table_courses = $('#datatable_student_score').DataTable();
+    table_courses.clear();
+    table_courses.destroy();
+    table_courses = $('#datatable_student_score').dataTable({
+        'scrollX': false,
+        'pagingType': 'numbers',
+        'processing': true,
+        'serverSide': true,
+        'searching': false,
+        "ajax": {
+            "url": "get-data-table-student-score",
+            "type": "POST",
+            "data": { student_id: student_id }
+        },
+       
+    });
+    
+
+}

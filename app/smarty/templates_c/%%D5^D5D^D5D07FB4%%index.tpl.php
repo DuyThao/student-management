@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.32, created on 2021-11-15 14:48:48
+<?php /* Smarty version 2.6.32, created on 2021-11-16 11:37:00
          compiled from users/index.tpl */ ?>
 <?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => "share/header.tpl", 'smarty_include_vars' => array()));
@@ -28,12 +28,8 @@ unset($_smarty_tpl_vars);
                             <tr>
                                 <th>Id</th>
                                 <th>Name</th>
-                                <th>Action</th>
-
                             </tr>
                             </thead>
-                            <tbody>
-                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -48,7 +44,6 @@ $this->_smarty_include(array('smarty_include_tpl_file' => "users/addUsers.tpl", 
 $this->_tpl_vars = $_smarty_tpl_vars;
 unset($_smarty_tpl_vars);
  ?>
-
 <?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => "share/footer.tpl", 'smarty_include_vars' => array()));
 $this->_tpl_vars = $_smarty_tpl_vars;

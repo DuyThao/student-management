@@ -58,7 +58,7 @@ class UsersController extends Route
         $model = new UsersModel;
         $model->validate($_POST['data']);
 
-        $data = $this->xssafe($_POST['data']);
+        $data = $model->xssafe($_POST['data']);
         $result =  $model->create($data);
     }
     public function xssafe($data, $encoding = 'UTF-8')

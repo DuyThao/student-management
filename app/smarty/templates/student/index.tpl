@@ -26,7 +26,7 @@
                 <div class="card-body">
                     <div class="table-responsive ">
                         <table class="table table-bordered table-striped table-hover" id="datatable_student"
-                            width="100%" cellspacing="0">
+                            width="100%" cellspacing="0" >
                             <thead>
                                 <tr>
                                     <th>Id</th>
@@ -49,6 +49,7 @@
 
 {include file="student/addStudent.tpl" }
 {include file="student/updateStudent.tpl" }
+{include file="student/courses.tpl" }
 
 {include file="share/footer.tpl"}
 <script src="public/js/student.js"></script>

@@ -103,6 +103,26 @@ class StudentController extends Route
 
         echo $student_courses->getStudentScore($student_courses);
     }
+    function getListCourses()
+    {
+        $columns = array(
+            array("db" => "id", "dt" => 0),
+            array("db" => "courses_name", "dt" => 1),
+            array("db" => "score", "dt" => 2),
+        );
+
+        
+ 
+        // select * from courses as c left join (select * from courses_student_mapping WHERE courses_student_mapping.student_id=9) as d on c.id=d.courses_id;
+       
+        $student_id=$_POST['student_id'];
+        $select ="c.id, courses_name,  d.score";
+        $joinQuery = "courses as c left join (select * from courses_student_mapping WHERE courses_student_mapping.student_id=$student_id) as d on c.id=d.courses_id";
+        $where = null;
+        $ssp = new sspService();
+        echo json_encode($ssp->SelectJoin($_POST, $GLOBALS['config']['mysql'], 'courses', 'name', $columns, $joinQuery , $select, $where  ));
+    }
+    
     public function xssafe($data, $encoding = 'UTF-8')
     {
         $service = new BaseService();

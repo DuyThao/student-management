@@ -21,7 +21,8 @@
 
     $router->post('/student-get-score', 'StudentController@getScore');
 
-   
+    $router->post('/get-data-table-student-score', 'StudentController@getListCourses');
+
 
     //courses page
 

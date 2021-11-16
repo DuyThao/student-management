@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.32, created on 2021-11-15 10:42:47
+<?php /* Smarty version 2.6.32, created on 2021-11-16 11:23:47
          compiled from student/index.tpl */ ?>
 <?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => "share/header.tpl", 'smarty_include_vars' => array()));
@@ -32,7 +32,7 @@ unset($_smarty_tpl_vars);
                 <div class="card-body">
                     <div class="table-responsive ">
                         <table class="table table-bordered table-striped table-hover" id="datatable_student"
-                            width="100%" cellspacing="0">
+                            width="100%" cellspacing="0" >
                             <thead>
                                 <tr>
                                     <th>Id</th>
@@ -60,6 +60,11 @@ unset($_smarty_tpl_vars);
  ?>
 <?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => "student/updateStudent.tpl", 'smarty_include_vars' => array()));
+$this->_tpl_vars = $_smarty_tpl_vars;
+unset($_smarty_tpl_vars);
+ ?>
+<?php $_smarty_tpl_vars = $this->_tpl_vars;
+$this->_smarty_include(array('smarty_include_tpl_file' => "student/courses.tpl", 'smarty_include_vars' => array()));
 $this->_tpl_vars = $_smarty_tpl_vars;
 unset($_smarty_tpl_vars);
  ?>
