@@ -10,9 +10,8 @@ use PDOException;
 class CoursesModel extends BaseModel
 {
 
-    public  int $id;
-    public  string $courses_name;
-
+    public   $id;
+    public   $courses_name;
 
     function getList()
     {

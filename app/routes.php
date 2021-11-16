@@ -36,6 +36,18 @@ $router->post('/student-of-courses-add', 'StudentOfCoursesController@createStude
 $router->post('/student-update-score', 'StudentOfCoursesController@updateStudent');
 $router->post('/student-of-courses-delete/{id}', 'StudentOfCoursesController@deleteStudent');
 
+//users
+$router->get('/users-list', 'UsersController@index');
+$router->post('/get-data-table-users', 'UsersController@getDatatable');
+$router->post('/users-add', 'UsersController@createUsers');
+
+
+
+$router->get('/login', 'UsersController@loginPage');
+$router->post('/login', 'UsersController@login');
+
+
+
 
 
 

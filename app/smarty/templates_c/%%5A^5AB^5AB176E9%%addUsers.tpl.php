@@ -1,5 +1,5 @@
-<?php /* Smarty version 2.6.32, created on 2021-11-15 08:11:59
-         compiled from student/addStudent.tpl */ ?>
+<?php /* Smarty version 2.6.32, created on 2021-11-15 14:48:48
+         compiled from users/addUsers.tpl */ ?>
 <!--begin add Modal -->
 <div class="modal fade" id="add_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true" data-backdrop="static" data-keyboard="false">
@@ -21,28 +21,28 @@
                     <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="small mb-1" for="name"> Name </label>
-                                <input class="form-control py-4" id="name" type="text"
-                                    placeholder=" Enter name " name="name" required />
+                                <label class="small mb-1" for="username"> Username </label>
+                                <input class="form-control py-4" id="username" type="text"
+                                    placeholder=" Enter username " name="username" required />
                                     <div class="invalid-feedback">
-                                    Valid name is required
+                                    Valid username is required
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="small mb-1" for="time"> Time </label>
-                                <input class="form-control py-4" id="time" placeholder=" Enter time "
-                                    name="time" type="datetime-local" required />
+                                <label class="small mb-1" for="password"> Password </label>
+                                <input class="form-control py-4" id="password" placeholder=" Enter password "
+                                    name="password" type="password" required />
                                 <div class="invalid-feedback">
-                                    Valid time is required
+                                    Valid password is required
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"> Close </button>
-                        <button type="submit" class="btn btn-primary" id="create_student"> Create </button>
+                        <button type="submit" class="btn btn-primary" id="create_users"> Create </button>
                     </div>
                 </form>
             </div>

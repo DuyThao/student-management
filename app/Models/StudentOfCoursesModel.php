@@ -11,10 +11,10 @@ use PDOException;
 class StudentOfCoursesModel extends BaseModel
 {
 
-    public  int $id;
-    public  string $student_id;
-    public  string $courses_id;
-    public  string $score;
+    public   $id;
+    public   $student_id;
+    public   $courses_id;
+    public   $score;
 
 
 
