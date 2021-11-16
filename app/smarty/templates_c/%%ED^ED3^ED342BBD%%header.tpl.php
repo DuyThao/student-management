@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.32, created on 2021-11-15 04:52:06
+<?php /* Smarty version 2.6.32, created on 2021-11-16 09:38:39
          compiled from share/header.tpl */ ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,11 +52,15 @@
                     <div class="nav">
                         <a class="nav-link" href="student-list">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Student list
+                            Student 
                         </a>
                         <a class="nav-link" href="courses-list">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Courses
+                        </a>
+                        <a class="nav-link" href="users-list">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                            User
                         </a>
                     </div>
                 </div>

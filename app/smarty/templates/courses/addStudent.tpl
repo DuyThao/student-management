@@ -13,36 +13,36 @@
 
                 <form class="needs-validation" novalidate id="add_form" enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="csrf_token()" />
-                    <input type="hidden" name="token" value="{$token}" id="csrf_token"/>
+                    <input type="hidden" name="token" value="{$token}" id="csrf_token" />
 
                     <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="small mb-1" for="name"> Student  </label>
+                                <label class="small mb-1" for="name"> Student </label>
                                 <select class="form-control" id="name" name="type" required>
-                                <option value="">Select student</option>
-                                {foreach from=$students item=item key=key }
-                                    <option value="{$item[0]}">{$item[1]}</option>
-                                {/foreach}
-                                    </select>
-                                    <div class="invalid-feedback">
+                                    <option value="">Select student</option>
+                                    {foreach from=$students item=item key=key }
+                                        <option value="{$item[0]}">{$item[1]}</option>
+                                    {/foreach}
+                                </select>
+                                <div class="invalid-feedback">
                                     Valid student is required
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="small mb-1" for="score"> Score </label>
-                            <input class="form-control py-4" id="score" placeholder=" Enter score "
-                                name="score" required />
-                            <div class="invalid-feedback">
-                                Valid score is required
+                            <div class="form-group">
+                                <label class="small mb-1" for="score"> Score </label>
+                                <input class="form-control py-4" id="score" placeholder=" Enter score " name="score"
+                                    required />
+                                <div class="invalid-feedback">
+                                    Valid score is required
+                                </div>
                             </div>
                         </div>
-                    </div>
 
                     </div>
-                   
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"> Close </button>
                         <button type="submit" class="btn btn-primary" id="create_student"> Create </button>

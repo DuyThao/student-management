@@ -5,6 +5,8 @@ namespace App\Controllers;
 
 use App\Models\StudentModel;
 use App\Config\Smarty\SmartyTemplate;
+use App\Models\CoursesModel;
+use App\Models\StudentOfCoursesModel;
 use App\Service\BaseService;
 use App\Service\sspService;
 use Core\Http\Route;
@@ -14,11 +16,21 @@ class StudentController extends Route
 
     function index()
     {
-        $service = new BaseService();
-        $token = $service->getCSRFToken();
-        $_SESSION['token'] = $token;
-        $this->tpl->assign('token', $token);
-        $this->tpl->display('student/index.tpl');
+        // if (isset($_SESSION['loggedin'])) {
+        //     if ($_SESSION['loggedin'] == true) {
+                $service = new BaseService();
+                $token = $service->getCSRFToken();
+                $_SESSION['token'] = $token;
+                $this->tpl->assign('token', $token);
+                $model = new CoursesModel;
+                $courses = $model->getList();
+
+                $this->tpl->assign('courses', $courses);
+                $this->tpl->display('student/index.tpl');
+            // }
+        // } else {
+        //     header('Location: ' . 'login');
+        // }
     }
 
     function getDataTable()
@@ -39,7 +51,7 @@ class StudentController extends Route
         echo json_encode($ssp->SelectGroupBy($_POST, $GLOBALS['config']['mysql'], 'student', 'id', $columns, $joinQuery, $select, $where, $groupBy, $top));
     }
 
-    
+
     function createStudent()
     {
         $service = new BaseService();
@@ -82,7 +94,20 @@ class StudentController extends Route
         $model = new StudentModel;
         $model->validate($_POST['data']);
         $student = $this->xssafe($_POST['data']);
-        echo $model->update($student);
+        $model->update($student);
+
+        $student_score = new StudentOfCoursesModel;
+        $student_score = $student_score->xssafe($_POST['student_score']);
+        $student_score->updateStudentScore($student_score);
+    }
+
+    function getScore()
+    {
+        $service = new BaseService();
+        $student_courses = new StudentOfCoursesModel;
+        $student_courses = $student_courses->xssafe($_POST['data']);
+
+        echo $student_courses->getStudentScore($student_courses);
     }
     public function xssafe($data, $encoding = 'UTF-8')
     {

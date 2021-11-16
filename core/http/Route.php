@@ -63,14 +63,58 @@ class Route
             call_user_func_array($action, $params);
             return;
         }
-
         if (is_string($action)) {
             $action = explode('@', $action);
             $controller_name = 'App\\Controllers\\' . $action[0];
             $controller = new $controller_name();
-            call_user_func_array([$controller, $action[1]], $params);
-
+            $a = $action[1];
+            if ($action[1] == 'loginPage') {
+                if (isset($_SESSION['loggedin'])) {
+                    if ($_SESSION['loggedin'] == true) {
+                        header('Location: ' . 'student-list');
+                    }
+                } else {
+                    $this->tpl->display('users/login.tpl');
+                    exit();
+                }
+            } else {
+                if (isset($_SESSION['loggedin']) || $action[1] == 'login') {
+                    if ($action[1] == 'login') {
+                        call_user_func_array([$controller, $action[1]], $params);
+                        return;
+                    }
+                    if ($_SESSION['loggedin'] == true) {
+                        call_user_func_array([$controller, $action[1]], $params);
+                    }
+                } else {
+                    header('Location: ' . 'login');
+                }
+            }
             return;
         }
     }
+    public function middleware()
+    {
+        if (isset($_SESSION['loggedin'])) {
+            if ($_SESSION['loggedin'] == true)
+                header('Location: ' . 'student-list');
+            die();
+            exit();
+        } else {
+            header('Location: ' . 'login');
+            die();
+            exit();
+        }
+    }
+
+    // public function redirect($uri=''){
+    //     if (preg_match('~^(http|https)~is', $uri)){
+    //         $url = $uri;
+    //     }else{
+    //         $url = _WEB_ROOT.'/'.$uri;
+    //     }
+
+    //     header("Location: ".$url);
+    //     exit;
+    // }
 }

@@ -30,21 +30,29 @@ class UsersController extends Route
         echo json_encode($ssp->simple($_POST, $GLOBALS['config']['mysql'], 'users', 'id', $columns));
     }
 
-    function loginPage(){
-        $this->tpl->display('users/login.tpl');
+    function loginPage()
+    {
+        if (isset($_SESSION['loggedin'])) {
+            if ($_SESSION['loggedin'] == true)
+                header('Location: ' . 'student-list');
+        } else {
+            $this->tpl->display('users/login.tpl');
+        }
     }
-    function login(){
-        $user= new UsersModel;
-        $user->username = $_POST['username'];
-        $user->password = $_POST['password'];
-        if($user->login($user) == true)
-            echo "haa";
-//            $this->tpl->display('student/index.tpl');
-        else
-            echo "sai r";
-//            $this->tpl->display('users/login.tpl');
+    function login()
+    {
+        $user = new UsersModel;
+        $user->username = $this->xssafe($_POST['username']);
+        $user->password = $this->xssafe($_POST['password']);
+        if ($user->login($user))
+            header('Location: ' . 'student-list');
+        else {
+            $this->tpl->assign('status', false);
+            $this->tpl->display('users/login.tpl');
+        }
     }
-    function createUsers(){
+    function createUsers()
+    {
         $service = new BaseService();
         $service->checkToken($_POST, $_SESSION);
         $model = new UsersModel;
@@ -52,14 +60,10 @@ class UsersController extends Route
 
         $data = $this->xssafe($_POST['data']);
         $result =  $model->create($data);
-
     }
     public function xssafe($data, $encoding = 'UTF-8')
     {
-        $users = new UsersModel;
-        foreach ($data as $key => $value) {
-            $users->$key = htmlspecialchars($value, ENT_QUOTES | ENT_HTML401, $encoding);
-        }
-        return $users;
+        $data = htmlspecialchars($data, ENT_QUOTES | ENT_HTML401, $encoding);
+        return $data;
     }
 }

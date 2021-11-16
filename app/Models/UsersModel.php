@@ -24,37 +24,46 @@ class UsersModel extends BaseModel
             $stmt = $this->db->prepare($sql);
             $password = password_hash(md5($data->password), PASSWORD_DEFAULT);
 
-            $stmt->execute([$data->username,$password ,$data->username,$data->username,'2021/11/11']);
+            $stmt->execute([$data->username, $password, $data->username, $data->username, '2021/11/11']);
             return $service->header_status(200);
         } catch (PDOException $e) {
             return $service->header_status(500);
-
         }
     }
-    function login($data){
+    function login($data)
+    {
         $service = new BaseService();
 
-        $sql = "SELECT * FROM  WHERE username =? and password=?";
+        $sql = "SELECT * FROM users WHERE username =? ";
         try {
             $stmt = $this->db->prepare($sql);
-            $password = password_hash( md5($data->password), PASSWORD_DEFAULT);
-            $stmt->execute([$data->username,$password ]);
-            if( $stmt->rowCount()>0)
-                return true;
-            else
+            $stmt->execute([$data->username]);
+            if ($stmt->rowCount() > 0) {
+
+                $user = $stmt->fetchAll();
+                $password = $user[0]['password'];
+                if (password_verify(md5($data->password), $password)) {
+                    $token = $service->getCSRFToken();
+                    $_SESSION['token_login'] = $token;
+                    $_SESSION['loggedin'] = true;
+                    $_SESSION['username'] = $data->username;
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
                 return false;
+            }
         } catch (PDOException $e) {
             return $service->header_status(500);
-
         }
     }
 
     function validate($data)
     {
         $service = new BaseService();
-        if (!isset($data['username']) || !isset($data['password']) ) {
+        if (!isset($data['username']) || !isset($data['password'])) {
             return  $service->header_status(400);
         }
     }
-   
 }

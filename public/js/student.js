@@ -29,7 +29,7 @@ let top_student = false;
                     $("#add_modal").modal('hide');
 
                 }).catch(function (error) {
-                    
+
                     Swal(error.statusText, '', 'error');
                 })
             }
@@ -47,10 +47,15 @@ let top_student = false;
                 'time': $('#update_time').val(),
                 'id': $('#update_form').attr('data-id'),
             }
+            var student_score = {
+                student_id: $('#update_form').attr('data-id'),
+                courses_id : $("#update_courses").val(),
+                score : $("#update_score").val()
+            }
             token = $('#csrf_token').val()
 
-            if ($('#update_name').val() != ""  && $('#update_time').val() != "") {
-                $.post("student-update", { data: data, token: token }, function (result) {
+            if ($('#update_name').val() != "" && $('#update_time').val() != "") {
+                $.post("student-update", { data: data, token: token , student_score:student_score}, function (result) {
                     console.log(result);
                     swal({
                         title: 'Update Success',
@@ -79,29 +84,31 @@ let top_student = false;
             $('#time').val('')
             $('#add_form').attr('class', 'needs-validation');
         })
+        $('#update_courses').on('change', function (e) {
+            data= {
+                student_id: $('#update_form').attr('data-id'),
+                courses_id:$("#update_courses").val()
+            }
+            $.post("student-get-score" , { data: data }, function (result) {
+                result = JSON.parse(result);
+                $("#update_score").val(result[0].score);
+            }).catch(function (error) {
+                $("#update_score").val("");
+               
+
+            })
+        })
+
+
     };
     new student();
 })($);
 
-function getItem(id) {
-    $.post("student-get-item/" + id, { id: id }, function (result) {
-        result = JSON.parse(result);
 
-        $('#update_form').attr('data-id', result[0][0]);
-        $('#update_name').val(result[0][1])
-        $('#update_courses').val(result[0][2])
-        $('#update_score').val(result[0][3])
-        time = result[0][4].replace(" ", "T");
-        $('#update_time').val(time)
-
-    })
-}
-
-function getItem(id, name,  time) {
+function getItem(id, name, time) {
 
     $('#update_form').attr('data-id', id);
     $('#update_name').val(name)
-    
     time = time.replace(" ", "T");
     $('#update_time').val(time)
 
@@ -113,19 +120,19 @@ function topStudent() {
     var table = $('#datatable_student').DataTable();
     table.clear();
     table.destroy();
-    $("#btn_top").attr("disabled" , true);
+    $("#btn_top").attr("disabled", true);
     $("#btn_back").show();
 
     reload_table();
 
 }
-function back(){
+function back() {
     top_student = false
     var table = $('#datatable_student').DataTable();
     table.clear();
     table.destroy();
     reload_table();
-    $("#btn_top").attr("disabled" , false);
+    $("#btn_top").attr("disabled", false);
     $("#btn_back").hide();
 }
 
@@ -174,7 +181,7 @@ function reload_table() {
         "ajax": {
             "url": "get-data-table-student",
             "type": "POST",
-            "data":{top_student:top_student}
+            "data": { top_student: top_student }
         },
         "columns": [
             { "data": "0" },

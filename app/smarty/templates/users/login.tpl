@@ -2,9 +2,11 @@
 <div class="wrapper fadeInDown">
     <div id="formContent">
         <!-- Tabs Titles -->
-
         <div class="fadeIn first">
-
+        <br>
+        {if isset($status) && $status == false}
+            <div class="dannger">Username or password is incorrect</div>
+        {/if}
         </div>
         <br> <br>
         <!-- Login Form -->
@@ -13,8 +15,6 @@
             <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
             <input type="submit" class="fadeIn fourth" value="Log In">
         </form>
-
-
 
     </div>
 </div>
