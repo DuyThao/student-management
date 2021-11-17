@@ -111,6 +111,8 @@ function getItem(id, name, time) {
     $('#update_name').val(name)
     time = time.replace(" ", "T");
     $('#update_time').val(time)
+    $('#update_courses').val("")
+    $('#update_score').val("")
 
 }
 

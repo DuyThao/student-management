@@ -66,4 +66,9 @@ class UsersController extends Route
         $data = htmlspecialchars($data, ENT_QUOTES | ENT_HTML401, $encoding);
         return $data;
     }
+    function logout()
+    {
+        session_destroy();
+        header('Location: ' . 'login');
+    }
 }
