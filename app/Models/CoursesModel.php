@@ -15,7 +15,7 @@ class CoursesModel extends BaseModel
 
     function getList()
     {
-        $dbh = $this->db->prepare("SELECT * FROM courses");
+        $dbh = $this->db->prepare('SELECT * FROM courses');
         $dbh->execute();
         if ($dbh->rowCount()) {
             return  $dbh->fetchAll();
@@ -25,13 +25,13 @@ class CoursesModel extends BaseModel
     {
         $service = new BaseService();
 
-        $sql = "INSERT INTO courses (courses_name)  VALUES (?)";
+        $sql = 'INSERT INTO courses (courses_name)  VALUES (?)';
         try {
             $stmt = $this->db->prepare($sql);
             $stmt->execute([$data->name]);
             return $service->header_status(200);
         } catch (PDOException $e) {
-            return $service->header_status(500);
+            return $service->header_status_code(500, $e->getMessage());
 
         }
     }
@@ -39,13 +39,13 @@ class CoursesModel extends BaseModel
     function update($data)
     {
         $service = new BaseService();
-        $sql = "UPDATE courses SET courses_name =? WHERE id =?";
+        $sql = 'UPDATE courses SET courses_name =? WHERE id =?';
         try {
             $stmt = $this->db->prepare($sql);
             $stmt->execute([$data->name, $data->id]);
             return $service->header_status(200);
         } catch (PDOException $e) {
-            return $service->header_status(500);
+            return $service->header_status_code(500, $e->getMessage());
         }
     }
 
@@ -53,7 +53,7 @@ class CoursesModel extends BaseModel
     {
         $service = new BaseService();
         try {
-            $dbh = $this->db->prepare("DELETE FROM courses WHERE id=?");
+            $dbh = $this->db->prepare('DELETE FROM courses WHERE id=?');
             $dbh->execute([$id]);
             $count = $dbh->rowCount();
             if ($count < 1)
@@ -61,13 +61,13 @@ class CoursesModel extends BaseModel
             else
                 return $service->header_status(200);
         } catch (PDOException $e) {
-            return $service->header_status(500);
+            return $service->header_status_code(500, $e->getMessage());
         }
     }
 
     function getItem($id)
     {
-        $dbh = $this->db->prepare("SELECT * FROM courses WHERE id=?");
+        $dbh = $this->db->prepare('SELECT * FROM courses WHERE id=?');
         $dbh->execute(array($id));
         if ($dbh->rowCount()) {
             return  $dbh->fetchAll(PDO::FETCH_NUM);

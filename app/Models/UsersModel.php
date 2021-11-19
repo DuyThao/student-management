@@ -19,7 +19,7 @@ class UsersModel extends BaseModel
     {
         $service = new BaseService();
 
-        $sql = "INSERT INTO users (username, password, email, phone, create_at ) VALUES (?, ?, ?, ?, ?)";
+        $sql = 'INSERT INTO users (username, password, email, phone, create_at ) VALUES (?, ?, ?, ?, ?)';
         try {
             $stmt = $this->db->prepare($sql);
             $password = password_hash(md5($data->password), PASSWORD_DEFAULT);
@@ -34,7 +34,7 @@ class UsersModel extends BaseModel
     {
         $service = new BaseService();
 
-        $sql = "SELECT * FROM users WHERE username =? ";
+        $sql = 'SELECT * FROM users WHERE username =? ';
         try {
             $stmt = $this->db->prepare($sql);
             $stmt->execute([$data->username]);

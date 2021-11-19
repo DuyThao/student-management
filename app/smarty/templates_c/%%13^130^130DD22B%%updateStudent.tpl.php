@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.32, created on 2021-11-16 05:59:09
+<?php /* Smarty version 2.6.32, created on 2021-11-18 02:08:10
          compiled from student/updateStudent.tpl */ ?>
 <!--begin update Modal -->
 <div class="modal fade" id="edit_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -44,7 +44,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="small mb-1" for="update_courses"> Courses </label>
-                                <select class="form-control" id="update_courses" name="type">
+                                <select class="form-control" id="update_courses" name="type" required>
                                     <option value="">Select courses</option>
                                     <?php $_from = $this->_tpl_vars['courses']; if (($_from instanceof StdClass) || (!is_array($_from) && !is_object($_from))) { settype($_from, 'array'); }if (count($_from)):
     foreach ($_from as $this->_tpl_vars['key'] => $this->_tpl_vars['item']):

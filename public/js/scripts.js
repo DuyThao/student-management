@@ -30,3 +30,22 @@ var timezone = offset / 60;
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
 })(jQuery);
+
+
+function checkResponse(result, response_text, table_id, modal){
+    if(result)
+    {
+        location.reload();
+    }
+    else{
+        swal({
+            title: response_text,
+            type: 'success',
+            timer: 1000,
+            buttons: true,
+        })
+        $(`#${table_id}`).DataTable().ajax.reload();
+
+        $(`#${modal}`).modal('hide');
+    }
+}

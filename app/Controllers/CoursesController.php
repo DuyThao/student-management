@@ -44,8 +44,8 @@ class CoursesController extends Route
     function getDatatable()
     {
         $columns = array(
-            array("db" => "id", "dt" => 0),
-            array("db" => "courses_name", "dt" => 1),
+            array('db' => 'id', 'dt' => 0),
+            array('db' => 'courses_name', 'dt' => 1),
         );
         $ssp = new sspService();
         echo json_encode($ssp->simple($_POST, $GLOBALS['config']['mysql'], 'courses', 'id', $columns));
@@ -66,23 +66,6 @@ class CoursesController extends Route
             $data = $this->xssafe($_POST['data']);
             $result =  $model->create($data);
             echo ($result);
-        }
-    }
-    function deleteCourses()
-    {
-        $service = new BaseService();
-
-        $model = new CoursesModel;
-        $url = $_GET['url'];
-        $id = addslashes(explode("/", $url)[1]);
-        $data = $_POST;
-        $token = array_shift(array_keys($data));
-        $ss_token = $_SESSION['token'];
-
-        if ($token != $ss_token) {
-            $service->header_status(401);
-        } else {
-            echo $model->delete($id);
         }
     }
 

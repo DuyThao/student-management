@@ -18,18 +18,8 @@ let top_student = false;
             token = $('#csrf_token').val()
             if ($('#name').val() != "" && $('#time').val() != "") {
                 $.post("student-add", { data: data, token: token }, function (result) {
-                    swal({
-                        title: 'Create Success',
-                        type: 'success',
-                        timer: 1000,
-                        buttons: true,
-                    })
-                    $('#datatable_student').DataTable().ajax.reload();
-
-                    $("#add_modal").modal('hide');
-
+                    checkResponse(result, 'Create Success', 'datatable_student', 'add_modal')
                 }).catch(function (error) {
-
                     Swal(error.statusText, '', 'error');
                 })
             }
@@ -41,35 +31,30 @@ let top_student = false;
 
         $('#update_form').on('submit', function (e) {
             e.preventDefault();
+            name=$('#update_name').val()
+            time=$('#update_time').val()
+            student_id= $('#update_form').attr('data-id')
+            courses_id=$('#update_courses').val()
+            score=$('#update_score').val()
 
             var data = {
-                'name': $('#update_name').val(),
-                'time': $('#update_time').val(),
-                'id': $('#update_form').attr('data-id'),
+                'name': name,
+                'time': time,
+                'id': student_id
             }
             var student_score = {
-                student_id: $('#update_form').attr('data-id'),
-                courses_id : $("#update_courses").val(),
-                score : $("#update_score").val()
+                student_id: student_id,
+                courses_id : courses_id,
+                score :score
             }
             token = $('#csrf_token').val()
 
-            if ($('#update_name').val() != "" && $('#update_time').val() != "") {
-                $.post("student-update", { data: data, token: token , student_score:student_score}, function (result) {
-                    console.log(result);
-                    swal({
-                        title: 'Update Success',
-                        type: 'success',
-                        timer: 1000,
-                        buttons: true,
+            if (name != '' && time != '' && (courses_id != '' && score != '') || (courses_id == '' && score == '')) {
+                    $.post("student-update", { data: data, token: token , student_score:student_score}, function (result) {
+                        checkResponse(result, 'Update Success', 'datatable_student', 'edit_modal')
+                    }).catch(function (error) {
+                        Swal(error.statusText, '', 'error');
                     })
-                    $('#datatable_student').DataTable().ajax.reload();
-
-                    $("#edit_modal").modal('hide');
-
-                }).catch(function (error) {
-                    Swal(error.statusText, '', 'error');
-                })
             }
             else {
                 return;
@@ -83,6 +68,10 @@ let top_student = false;
             $('#name').val('')
             $('#time').val('')
             $('#add_form').attr('class', 'needs-validation');
+        })
+        $('#edit_modal').on('hidden.bs.modal', function (e) {
+            $('#update_score').val('')
+            $('#update_form').attr('class', 'needs-validation');
         })
         $('#update_courses').on('change', function (e) {
             data= {
@@ -157,16 +146,11 @@ function deleteStudent(id) {
 
             axios.post('student-delete/' + id, token)
                 .then(res => {
-                    swal({
-                        title: 'Delete Success',
-                        type: 'success',
-                        timer: 1000,
-                        buttons: true,
-                    })
-                    $('#datatable_student').DataTable().ajax.reload();
+                    checkResponse(result, 'Delete Success', 'datatable_student', 'modal')
+
                 }).catch(function (error) {
                     console.log(error);
-                    Swal('Student is active', '', 'error');
+                    Swal('Delete Fail', '', 'error');
 
                 })
         }

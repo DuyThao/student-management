@@ -56,15 +56,7 @@ let top_student = false;
             token = $('#csrf_token').val()
             if ($('#name').val() != "" && $('#score').val() != "" ) {
                 $.post("student-of-courses-add", { data: data, token: token }, function (result) {
-                    swal({
-                        title: 'Create Success',
-                        type: 'success',
-                        timer: 1000,
-                        buttons: true,
-                    })
-                    $('#datatable_student_of_courses').DataTable().ajax.reload();
-                    $("#add_modal").modal('hide');
-
+                    checkResponse(result, 'Create Success', 'datatable_student_of_courses', 'add_modal')
                 }).catch(function (error) {
                     console.log(error);
                     Swal('Create fail', '', 'error');
@@ -87,18 +79,7 @@ let top_student = false;
 
             if ($('#update_score').val() != "" ) {
                 $.post("student-update-score", { data: data, token: token }, function (result) {
-                    console.log(result);
-                    swal({
-                        title: 'Update Success',
-                        type: 'success',
-                        timer: 1000,
-                        buttons: true,
-                    })
-                    $('#datatable_student_of_courses').DataTable().ajax.reload();
-
-                    $("#edit_modal").modal('hide');
-
-
+                    checkResponse(result, 'Update Success', 'datatable_student_of_courses', 'edit_modal')
                 }).catch(function (error) {
                     console.log(error);
                     Swal('Update fail', '', 'error');
@@ -152,14 +133,7 @@ function deleteStudent(id) {
 
             axios.post('student-of-courses-delete/' + id, token)
                 .then(res => {
-                    swal({
-                        title: 'Delete Success',
-                        type: 'success',
-                        timer: 1000,
-                        buttons: true,
-                    })
-                    $('#datatable_student_of_courses').DataTable().ajax.reload();
-
+                    checkResponse(result, 'Delete Success', 'datatable_student_of_courses', 'modal')
                 }).catch(function (error) {
                     console.log(error);
                     Swal('Update fail', '', 'error');

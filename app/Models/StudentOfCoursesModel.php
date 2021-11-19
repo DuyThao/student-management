@@ -22,27 +22,27 @@ class StudentOfCoursesModel extends BaseModel
     {
         $service = new BaseService();
 
-        $sql = "INSERT INTO courses_student_mapping (student_id, courses_id, score)  VALUES (? , ? , ? )";
+        $sql = 'INSERT INTO courses_student_mapping (student_id, courses_id, score)  VALUES (? , ? , ? )';
         try {
             $stmt = $this->db->prepare($sql);
             $courses_id = $_SESSION['courses_id'];
             $stmt->execute([$data->student_id, $courses_id, $data->score]);
             return $service->header_status(200);
         } catch (PDOException $e) {
-            return  $service->header_status(500, $e);
+            return $service->header_status_code(500, $e->getMessage());
         }
     }
 
     function update($data)
     {
         $service = new BaseService();
-        $sql = "UPDATE courses_student_mapping SET score =? WHERE id =?";
+        $sql = 'UPDATE courses_student_mapping SET score =? WHERE id =?';
         try {
             $stmt = $this->db->prepare($sql);
             $stmt->execute([$data->score, $data->id]);
             return $service->header_status(200);
         } catch (PDOException $e) {
-            return  $service->header_status(500);
+            return $service->header_status_code(500, $e->getMessage());
         }
     }
 
@@ -52,22 +52,22 @@ class StudentOfCoursesModel extends BaseModel
 
         if ($this->getStudentScore($data) != null) {
 
-            $sql = "UPDATE courses_student_mapping SET score =? WHERE student_id =? AND courses_id=?";
+            $sql = 'UPDATE courses_student_mapping SET score =? WHERE student_id =? AND courses_id=?';
             try {
                 $stmt = $this->db->prepare($sql);
                 $stmt->execute([$data->score, $data->student_id, $data->courses_id]);
                 return $service->header_status(200);
             } catch (PDOException $e) {
-                return  $service->header_status(500);
+                return $service->header_status_code(500, $e->getMessage());
             }
         } else {
-            $sql = "INSERT INTO courses_student_mapping (student_id, courses_id, score)  VALUES (? , ? , ? )";
+            $sql = 'INSERT INTO courses_student_mapping (student_id, courses_id, score)  VALUES (? , ? , ? )';
             try {
                 $stmt = $this->db->prepare($sql);
                 $stmt->execute([$data->student_id, $data->courses_id, $data->score]);
                 return $service->header_status(200);
             } catch (PDOException $e) {
-                return  $service->header_status(500, $e);
+                return $service->header_status_code(500, $e->getMessage());
             }
         }
     }
@@ -77,15 +77,15 @@ class StudentOfCoursesModel extends BaseModel
         try {
             $service = new BaseService();
 
-            $dbh = $this->db->prepare("DELETE FROM courses_student_mapping WHERE id=?");
-            // $dbh->execute([$id]);
+            $dbh = $this->db->prepare('DELETE FROM courses_student_mapping WHERE id=?');
+            $dbh->execute([$id]);
             $count = $dbh->rowCount();
             if ($count < 1)
                 return $service->header_status(500);
             else
                 return $service->header_status(200);
         } catch (PDOException $e) {
-            return $service->header_status(500);
+            return $service->header_status_code(500, $e->getMessage());
         }
     }
 
@@ -94,7 +94,7 @@ class StudentOfCoursesModel extends BaseModel
     {
         $service = new BaseService();
 
-        $dbh = $this->db->prepare("SELECT * FROM courses_student_mapping WHERE student_id=? AND courses_id=?");
+        $dbh = $this->db->prepare('SELECT * FROM courses_student_mapping WHERE student_id=? AND courses_id=?');
         $dbh->execute([$student_courses->student_id, $student_courses->courses_id]);
         $count = $dbh->rowCount();
         if ($dbh->rowCount() > 0) {

@@ -47,7 +47,7 @@ class BaseService
 
         $token = $request['token'];
         $ss_token = $session['token'];
-        if ($token != $ss_token) {
+        if ($token != $ss_token || $request['loggedin'] == true) {
             return $service->header_status(401);
         } else {
             return true;

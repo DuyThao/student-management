@@ -164,11 +164,11 @@ class sspService
         $limit = self::limit($request, $columns);
         $order = self::order($request, $columns);
         $where = self::filter($request, $columns, $bindings);
-
+        $select =implode("`, `", self::pluck($columns, 'db')) ;
         $data = self::sql_exec(
             $db,
             $bindings,
-            "SELECT `" . implode("`, `", self::pluck($columns, 'db')) . "`
+            "SELECT `$select`
 			 FROM `$table`
 			 $where
 			 $order
@@ -210,7 +210,7 @@ class sspService
         $order = self::order($request, $columns);
         // $where = self::filter($request, $columns, $bindings);
         if ($top == 'true')
-            $query =  "SELECT $select FROM $joinQuery WHERE $filter GROUP BY $groupBy ORDER BY average_score DESC LIMIT 3";
+            $query =  "SELECT $select FROM $joinQuery WHERE $filter GROUP BY $groupBy HAVING average_score IS NOT NULL  ORDER BY average_score DESC LIMIT 3";
         else
             $query =  "SELECT $select FROM $joinQuery WHERE $filter GROUP BY $groupBy $order $limit";
         $data = self::sql_exec(
@@ -335,11 +335,11 @@ class sspService
 
             $whereAllSql = 'WHERE ' . $whereAll;
         }
-
+        $select =implode("`, `", self::pluck($columns, 'db')) ;
         $data = self::sql_exec(
             $db,
             $bindings,
-            "SELECT `" . implode("`, `", self::pluck($columns, 'db')) . "`
+            "SELECT `$select`
 			 FROM `$table`
 			 $where
 			 $order

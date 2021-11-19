@@ -41,7 +41,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="small mb-1" for="update_courses"> Courses </label>
-                                <select class="form-control" id="update_courses" name="type">
+                                <select class="form-control" id="update_courses" name="type" required>
                                     <option value="">Select courses</option>
                                     {foreach from=$courses item=item key=key }
                                         <option value="{$item[0]}">{$item[1]}</option>

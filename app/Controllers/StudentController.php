@@ -29,20 +29,8 @@ class StudentController extends Route
 
     function getDataTable()
     {
-        $columns = array(
-            array("db" => "id", "dt" => 0),
-            array("db" => "name", "dt" => 1),
-            array("db" => "time", "dt" => 2),
-            array("db" => "average_score", "dt" => 3),
-        );
-        $select = "std.id, std.name, time,  AVG(a.score) as average_score";
-        $joinQuery = "courses_student_mapping as a right join student as std on std.id = a.student_id ";
-        $search = $_POST['search']['value'];
-        $where = " name like '%$search%' or time like '%$search%' ";
-        $groupBy = " std.id, std.name, time ";
-        $top = $_POST['top_student'];
-        $ssp = new sspService();
-        echo json_encode($ssp->SelectGroupBy($_POST, $GLOBALS['config']['mysql'], 'student', 'id', $columns, $joinQuery, $select, $where, $groupBy, $top));
+        $students=new StudentModel;
+        echo $students->getList();
     }
 
 
@@ -111,10 +99,6 @@ class StudentController extends Route
             array("db" => "score", "dt" => 2),
         );
 
-        
- 
-        // select * from courses as c left join (select * from courses_student_mapping WHERE courses_student_mapping.student_id=9) as d on c.id=d.courses_id;
-       
         $student_id=$_POST['student_id'];
         $select ="c.id, courses_name,  d.score";
         $joinQuery = "courses as c left join (select * from courses_student_mapping WHERE courses_student_mapping.student_id=$student_id) as d on c.id=d.courses_id";

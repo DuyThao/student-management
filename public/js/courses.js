@@ -15,15 +15,7 @@
             token = $('#csrf_token').val()
             if ($('#name').val() != "") {
                 $.post("courses-add", { data: data, token: token }, function (result) {
-
-                    swal({
-                        title: 'Create Success',
-                        type: 'success',
-                        timer: 1000,
-                        buttons: true,
-                    })
-                    $('#datatable_courses').DataTable().ajax.reload();
-                    $("#add_modal").modal('hide');
+                    checkResponse(result, 'Create Success', 'datatable_courses', 'add_modal')
 
                 }).catch(function (error) {
                     console.log(error);
@@ -92,39 +84,3 @@ function getItem(id, name) {
     $('#update_time').val(time)
 
 }
-function deleteStudent(id) {
-    token = $('#csrf_token').val()
-
-    swal({
-        title: 'Are you sure?',
-        text: "What do you want to delete it?",
-        type: 'warning',
-        showCancelButton: true,
-
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        cancelButtonText: 'Cancel',
-        confirmButtonText: 'Confirm'
-    }).then((result) => {
-
-        if (result.value) {
-
-            axios.post('student-delete/' + id, token)
-                .then(res => {
-                    swal({
-                        title: 'Delete Success',
-                        type: 'success',
-                        timer: 1000,
-                        buttons: true,
-                    })
-                    reload_table()
-                }).catch(function (error) {
-                    console.log(error);
-                    Swal('Update fail', '', 'error');
-
-                })
-        }
-    })
-
-}
-

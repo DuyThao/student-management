@@ -16,16 +16,7 @@
             token = $('#csrf_token').val()
             if ($('#username').val() != "" && $('#password').val() != "") {
                 $.post("users-add", { data: data, token: token }, function (result) {
-
-                    swal({
-                        title: 'Create Success',
-                        type: 'success',
-                        timer: 1000,
-                        buttons: true,
-                    })
-                    $('#datatable_users').DataTable().ajax.reload();
-                    $("#add_modal").modal('hide');
-
+                    checkResponse(result, 'Create Success', 'datatable_users', 'add_modal')
                 }).catch(function (error) {
                     console.log(error);
                     Swal(error.statusText, '', 'error');
