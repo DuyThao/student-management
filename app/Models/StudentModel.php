@@ -22,8 +22,8 @@ class StudentModel extends BaseModel
     {
         $dbh = $this->db->prepare('SELECT * 
                                     FROM student as std LEFT JOIN courses_student_mapping as c on std.id=c.id
-                                    WHERE c.student_id is null ' );
-        $dbh->execute([$_SESSION['courses_id']]);
+                                    WHERE c.student_id is null' );
+        $dbh->execute();
         if ($dbh->rowCount()) {
             return $dbh->fetchAll(PDO::FETCH_NUM);
         }

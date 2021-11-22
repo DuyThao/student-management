@@ -50,7 +50,7 @@
                     <div class="nav">
                         <a class="nav-link" href="student-list">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Student 
+                            Students
                         </a>
                         <a class="nav-link" href="courses-list">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
@@ -58,7 +58,7 @@
                         </a>
                         <a class="nav-link" href="users-list">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            User
+                            Users
                         </a>
                     </div>
                 </div>

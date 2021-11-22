@@ -4,6 +4,7 @@
 namespace App\Models;
 
 use App\Service\BaseService;
+use App\Service\sspService;
 use DateTime;
 use PDO;
 use PDOException;
@@ -101,6 +102,22 @@ class StudentOfCoursesModel extends BaseModel
             return  json_encode($dbh->fetchAll());
         } else
             $service->header_status(500);
+    }
+    function getList(){
+        $columns = array(
+            array("db" => "id", "dt" => 0),
+            array("db" => "name", "dt" => 1),
+            array("db" => "courses_name", "dt" => 2),
+            array("db" => "score", "dt" => 3),
+           
+        );
+        $id= $_POST['id'];
+        $_SESSION['courses_id'] = $id;
+        $select ="a.id, std.name, courses_name,  a.score";
+        $joinQuery = "courses_student_mapping as a inner join student as std on std.id = a.student_id inner join courses as c on c.id=a.courses_id";
+        $where = "courses_id=$id";
+        $ssp = new sspService();
+        return json_encode($ssp->SelectJoin($_POST, $GLOBALS['config']['mysql'], 'student', 'name', $columns, $joinQuery , $select, $where  ));
     }
 
     function validate($data)
